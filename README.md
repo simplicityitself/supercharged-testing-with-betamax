@@ -103,13 +103,13 @@ All I needed to do was configure the HTTPBuilder that was used by my underlying 
 	@Profile('test')
 	class RecordingJSONServicesConfiguration {
 
-  	@Bean
-  	HTTPBuilder httpBuilder() {
-    	def builder = new HTTPBuilder()
-    	BetamaxRoutePlanner.configure(builder.client)
-    	BetamaxHttpsSupport.configure(builder.client);
-    	builder
-  	}
+  		@Bean
+  		HTTPBuilder httpBuilder() {
+    		def builder = new HTTPBuilder()
+    		BetamaxRoutePlanner.configure(builder.client)
+    		BetamaxHttpsSupport.configure(builder.client);
+    		builder
+  		}
 	}
 
 I then added this new configuration to my local test configuration in the `BaseLocalEnvironmentSpec`:
