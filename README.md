@@ -34,22 +34,22 @@ Ok, first let's take a look at the test before introducing Betamax. This test's 
 
 	class HourBatchChatImportPipelineIntegrationSpec extends BaseLocalEnvironmentSpec {
 
-  	def "import and process chatter feed items correctly"() {
+  		def "import and process chatter feed items correctly"() {
 
-    	given:
-    	def hourBatchChatImportPipeline = applicationContext.getBean(HourBatchChatterImportPipeline)
-    	def calculateDateTimeRange = applicationContext.getBean(CalculateDateTimeRange)
+    		given:
+    		def hourBatchChatImportPipeline = applicationContext.getBean(HourBatchChatterImportPipeline)
+    		def calculateDateTimeRange = applicationContext.getBean(CalculateDateTimeRange)
 
-    	def from = "2014-05-22-1"
-    	def to = "2014-05-22-5"
-    	def (start, end) = calculateDateTimeRange.getStartEnd(from, to)
+    		def from = "2014-05-22-1"
+    		def to = "2014-05-22-5"
+    		def (start, end) = calculateDateTimeRange.getStartEnd(from, to)
 
-    	when:
-    	def response = hourBatchChatImportPipeline.call(start, end)
+    		when:
+    		def response = hourBatchChatImportPipeline.call(start, end)
 
-    	then:
-    	response != null
-    }
+    		then:
+    		response != null
+    	}
 	}
 
 
