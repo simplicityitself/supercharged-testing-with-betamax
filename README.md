@@ -18,7 +18,7 @@ The Betamax tape is a human-readable [YAML](http://www.yaml.org) file that you c
 
 TBD diagram showing the tape being used for replay.
 
-## The Challenge: HTTPS
+## Challenge 1: Speed
 
 I came to Betamax as someone who was running a long-winded test against an external chat-style system. My micro service's single-purpose was to retrieve 1-hour batches of conversations in the chat system, and ferrying that on to the next micro service in the chain for further processing. 
 
@@ -78,9 +78,13 @@ Enter Betamax, stage left.
 
 ## Introducing Betamax to the Chat Service's Testing
 
+Taking a peek at the 'Getting Started' information on the Betamax homepage, things looked fairly straightforward to get started. First I introduced the Betamax dependencies to my default Spring Boot Gradle build file, `build.gradle`:
 
+	testCompile 'co.freeside:betamax:1.1.2'
 
-The source was an HTTP interface 
+Under the skin of my service I was using Groovy's HTTPBuilder to connect to the chat posts source, and so the first thing I needed to do 
+
+## Challenge 2: HTTPS
 
 
 
