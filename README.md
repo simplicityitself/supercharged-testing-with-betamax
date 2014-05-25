@@ -52,6 +52,21 @@ Ok, first let's take a look at the test before introducing Betamax. This test's 
     	}
 	}
 
+Here we're using a `BaseLocalEnvironmentSpec` to set up the Spring application context, switching on a 'local' profile that selects downstream microservices running on my local testing machine (rather than resolving them to full services as happens at runtime). The contents of the `BaseLocalEnvironmentSpec` is shown below:
+
+	abstract class BaseLocalEnvironmentSpec extends Specification {
+
+  	def static applicationContext;
+
+  	def setupSpec() {
+    	applicationContext = new AnnotationConfigApplicationContext()
+    	applicationContext.getEnvironment().setActiveProfiles("local", "test");
+    	applicationContext.register(ChatHooverController);
+    	applicationContext.register(RecordingJSONServicesConfiguration);
+    applicationContext.refresh()
+  	}
+	}
+
 
 > There is also support for JUnit withing Betamax, although here we'll focus on using Spock as the tests are much simpler, clearer and therefore more readable and comprehendible.
 
