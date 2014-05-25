@@ -125,7 +125,7 @@ I then added this new configuration to my local test configuration in the `BaseL
 			applicationContext.register(RecordingJSONServicesConfiguration);
     		applicationContext.refresh()
   		}
-}
+	}
 
 ## Challenge 2: HTTPS
 
