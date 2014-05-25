@@ -62,8 +62,7 @@ Here we're using a `BaseLocalEnvironmentSpec` to set up the Spring application c
     		applicationContext = new AnnotationConfigApplicationContext()
     		applicationContext.getEnvironment().setActiveProfiles("local", "test");
     		applicationContext.register(ChatHooverController);
-
-    	applicationContext.refresh()
+    		applicationContext.refresh()
   		}
 	}
 
