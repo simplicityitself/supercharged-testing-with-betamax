@@ -87,7 +87,7 @@ With the dependencies in place, I could then add the markers to my Spock test to
 	@Rule Recorder recorder = new Recorder()
 
  	@Betamax(tape = 'chatter-import')
-  def "import and process chatter feed items correctly"() {
+  	def "import and process chatter feed items correctly"() {
 
 	...
 
