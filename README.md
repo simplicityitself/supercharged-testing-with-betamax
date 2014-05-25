@@ -32,12 +32,12 @@ My micro service is built using [Spring Boot](http://projects.spring.io/spring-b
 
 Ok, first let's take a look at the test before introducing Betamax. This test's aim was to prove that a few hours of posts, numbering roughly several thousands of posts, could be effectively slurped into the pipeline in nicely bounded hour chunks. For this testing, I used (as I often do when working with Java) the excellent [Spock framework](https://code.google.com/p/spock/):
 
-	class HourBatchChatImportPipelineIntegrationSpec extends BaseLocalEnvironmentSpec {
+	class HourBatchChatImportServiceIntegrationSpec extends BaseLocalEnvironmentSpec {
 
   		def "import and process chatter feed items correctly"() {
 
     		given:
-    		def hourBatchChatImportPipeline = applicationContext.getBean(HourBatchChatterImportPipeline)
+    		def hourBatchChatImportPipeline = applicationContext.getBean(HourBatchChatImportService)
     		def calculateDateTimeRange = applicationContext.getBean(CalculateDateTimeRange)
 
     		def from = "2014-05-22-1"
@@ -45,14 +45,16 @@ Ok, first let's take a look at the test before introducing Betamax. This test's 
     		def (start, end) = calculateDateTimeRange.getStartEnd(from, to)
 
     		when:
-    		def response = hourBatchChatImportPipeline.call(start, end)
+    		def response = hourBatchChatImportService.call(start, end)
 
     		then:
     		response != null
     	}
 	}
 
-Here we're using a `BaseLocalEnvironmentSpec` to set up the Spring application context, switching on a 'local' profile that selects downstream microservices running on my local testing machine (rather than resolving them to full services as happens at runtime). The contents of the `BaseLocalEnvironmentSpec` is shown below:
+The test grabs the hourBatchChatImportService, calculates a date range for the posts to be imported (in this case from 22nd May at 1am to 22nd May at 5am inclusive) and then kicks off the pipeline passing in those start and end date range parameters.
+
+I'm also using a `BaseLocalEnvironmentSpec` to set up the Spring application context, switching on a 'local' profile that selects downstream microservices running on my local testing machine (rather than resolving them to full services as happens at runtime). The contents of the `BaseLocalEnvironmentSpec` is shown below:
 
 	abstract class BaseLocalEnvironmentSpec extends Specification {
 
@@ -66,10 +68,17 @@ Here we're using a `BaseLocalEnvironmentSpec` to set up the Spring application c
   		}
 	}
 
+> The tests shown here are using Spock but there is also support for JUnit within Betamax. We'll focus on using Spock for this blog as the tests are much simpler, clearer and therefore more readable and comprehendible.
 
-> There is also support for JUnit withing Betamax, although here we'll focus on using Spock as the tests are much simpler, clearer and therefore more readable and comprehendible.
+The problem was, when running this test things took a *long* time. Fair longer than anyone was going to be willing to wait and so the test was in serious danger of being one that was rarely run.
 
-TBD Got here.
+I was willing to suck up that time once ,or maybe even twice, but *every time* the test is run? No way.
+
+Enter Betamax, stage left.
+
+## Introducing Betamax to the Chat Service's Testing
+
+
 
 The source was an HTTP interface 
 
