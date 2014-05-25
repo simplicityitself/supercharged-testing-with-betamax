@@ -22,7 +22,50 @@ TBD diagram showing the tape being used for replay.
 
 I came to Betamax as someone who was running a long-winded test against an external chat-style system. My micro service's single-purpose was to retrieve 1-hour batches of conversations in the chat system, and ferrying that on to the next micro service in the chain for further processing. 
 
-> *NOTE* This is a real 'live' system, so I've had to remove the names to protect the *innocent*.
+> *NOTE:* This blog is about a real 'live' system that Simplicity Itself are working on so I've had to remove the names to protect the *innocent*.
+
+Architecturally, my micro service's place in the world was fairly straightforward:
+
+TBD Diagram of where my micro service sits in the world.
+
+My micro service is built using [Spring Boot](http://projects.spring.io/spring-boot/), mainly because ideally the project is eventually handed over to the client's own Java and Spring-centric development teams. The main purpose of the project is to provide the required functionality, the secondary goal being to demonstrate [microservices and an antifragile software system](https://leanpub.com/antifragilesoftware).
+
+Ok, first let's take a look at the test before introducing Betamax. This test's aim was to prove that a few hours of posts, numbering roughly several thousands of posts, could be effectively slurped into the pipeline in nicely bounded hour chunks. For this testing, I used (as I often do when working with Java) the excellent [Spock framework](https://code.google.com/p/spock/):
+
+`class HourBatchChatImportPipelineIntegrationSpec extends BaseLocalEnvironmentSpec {
+
+  def "import and process chatter feed items correctly"() {
+
+    given:
+    def hourBatchChatImportPipeline = applicationContext.getBean(HourBatchChatterImportPipeline)
+    def calculateDateTimeRange = applicationContext.getBean(CalculateDateTimeRange)
+
+    def from = "2014-05-22-1"
+    def to = "2014-05-22-5"
+    def (start, end) = calculateDateTimeRange.getStartEnd(from, to)
+
+    when:
+    def response = hourBatchChatImportPipeline.call(start, end)
+
+    then:
+    response != null
+  }
+}`
+
+> There is also support for JUnit withing Betamax, although here we'll focus on using Spock as the tests are much simpler, clearer and therefore more readable and comprehendible.
+
+TBD Got here.
+
+The source was an HTTP interface 
+
+
+
+Further Information
+
+* Book
+* Course on Simplicity Itself
+
+ 
 
 
 
