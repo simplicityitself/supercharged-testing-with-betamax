@@ -82,6 +82,15 @@ Taking a peek at the 'Getting Started' information on the Betamax homepage, thin
 
 	testCompile 'co.freeside:betamax:1.1.2'
 
+With the dependencies in place, I could then add the markers to my Spock test to state that I wanted to use Betamax to record the HTTP interactions caused by my service importing chat posts.
+
+	@Rule Recorder recorder = new Recorder()
+
+ 	@Betamax(tape = 'chatter-import')
+  def "import and process chatter feed items correctly"() {
+
+	...
+
 Under the skin of my service I was using Groovy's HTTPBuilder to connect to the chat posts source, and so the first thing I needed to do 
 
 ## Challenge 2: HTTPS
