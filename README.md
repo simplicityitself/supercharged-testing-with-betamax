@@ -93,7 +93,28 @@ With the dependencies in place, I could then add the markers to my Spock test to
 
 	...
 
-Under the skin of my service I was using Groovy's HTTPBuilder to connect to the chat posts source, and so the first thing I needed to do 
+The JUnit @Rule `recorder` plugs in the Betamax runtime to the Spock runtime for this test. Then the `@Betamax` annotation simply specifies that a tape called `chatter-import` should be used to record the underlying HTTP interactions.
+
+Under the skin of my service I am using [Groovy's `HTTPBuilder` ](http://groovy.codehaus.org/HTTP+Builder)to connect to the chat posts source. Betamax uses a proxy approach to wrap and record interactions with HTTP clients and has native support for when you're using `HTTPBuilder`. 
+
+All I needed to do was configure the HTTPBuilder that was used by my underlying service's code to apply the Betamax proxy configuration to it, and to do this I created a new configuration using Spring's JavaConfig:
+
+	@Configuration
+	@Profile('test')
+	class RecordingJSONServicesConfiguration {
+
+  	@Bean
+  	HTTPBuilder httpBuilder() {
+    	def builder = new HTTPBuilder()
+    	BetamaxRoutePlanner.configure(builder.client)
+    	BetamaxHttpsSupport.configure(builder.client);
+    	builder
+  	}
+	}
+
+I then added this new configuration to my local test configuration in the `BaseLocalEnvironmentSpec`:
+
+
 
 ## Challenge 2: HTTPS
 
