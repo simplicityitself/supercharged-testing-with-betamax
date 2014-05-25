@@ -1,4 +1,4 @@
-# Supercharged Microservice Testing with Betamax
+# Supercharged HTTP-based Microservice Testing with Betamax
 
 *Yawn*. That pretty much sums up doing functional testing for microservices where you're pulling data feeds from an external system. 
 
