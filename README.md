@@ -114,7 +114,18 @@ All I needed to do was configure the HTTPBuilder that was used by my underlying 
 
 I then added this new configuration to my local test configuration in the `BaseLocalEnvironmentSpec`:
 
+	abstract class BaseLocalEnvironmentSpec extends Specification {
 
+  		def static applicationContext;
+
+  		def setupSpec() {
+    		applicationContext = new AnnotationConfigApplicationContext()
+    		applicationContext.getEnvironment().setActiveProfiles("local", "test");
+    		applicationContext.register(ChatterHooverController);
+		applicationContext.register(RecordingJSONServicesConfiguration);
+    applicationContext.refresh()
+  		}
+}
 
 ## Challenge 2: HTTPS
 
