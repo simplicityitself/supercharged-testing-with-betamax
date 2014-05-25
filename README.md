@@ -28,7 +28,7 @@ Architecturally, my micro service's place in the world was fairly straightforwar
 
 TBD Diagram of where my micro service sits in the world.
 
-My micro service is built using [Spring Boot](http://projects.spring.io/spring-boot/), mainly because ideally the project is eventually handed over to the client's own Java and Spring-centric development teams. The main purpose of the project is to provide the required functionality, the secondary goal being to demonstrate [microservices and an antifragile software system](https://leanpub.com/antifragilesoftware).
+My micro service is built using [Spring Boot](http://projects.spring.io/spring-boot/), mainly because ideally the project is eventually handed over to the client's own Groovy language and Spring-framework-centric development teams. The main purpose of the project is to provide the required functionality, the secondary goal being to demonstrate [microservices and an antifragile software system](https://leanpub.com/antifragilesoftware).
 
 Ok, first let's take a look at the test before introducing Betamax. This test's aim was to prove that a few hours of posts, numbering roughly several thousands of posts, could be effectively slurped into the pipeline in nicely bounded hour chunks. For this testing, I used (as I often do when working with Java) the excellent [Spock framework](https://code.google.com/p/spock/):
 
@@ -107,12 +107,11 @@ All I needed to do was configure the HTTPBuilder that was used by my underlying 
   		HTTPBuilder httpBuilder() {
     		def builder = new HTTPBuilder()
     		BetamaxRoutePlanner.configure(builder.client)
-    		BetamaxHttpsSupport.configure(builder.client);
     		builder
   		}
 	}
 
-I then added this new configuration to my local test configuration in the `BaseLocalEnvironmentSpec`:
+I then added this new configuration to my local test configuration in the `BaseLocalEnvironmentSpec` by registering the new `RecordingJSONServicesConfiguration`:
 
 	abstract class BaseLocalEnvironmentSpec extends Specification {
 
@@ -120,21 +119,60 @@ I then added this new configuration to my local test configuration in the `BaseL
 
   		def setupSpec() {
     		applicationContext = new AnnotationConfigApplicationContext()
-    		applicationContext.getEnvironment().setActiveProfiles("local", "test");
-    		applicationContext.register(ChatHooverController);
-			applicationContext.register(RecordingJSONServicesConfiguration);
+    		applicationContext.getEnvironment().setActiveProfiles("local", "test")
+    		applicationContext.register(ChatHooverController)
+			applicationContext.register(RecordingJSONServicesConfiguration)
     		applicationContext.refresh()
   		}
 	}
 
+That should be all that was needed but then disaster struck. I got all sorts of certificate problems when I tried to run my tests. Something was unhappy; *VERY* unhappy; something was convinced I was running a man-in-the-middle attack on my own system. 
+
+Which of course is actually sort-of true. 
+
+Disaster had struck the shape of the dreaded *HTTPS*, and I was stuck.
+
 ## Challenge 2: HTTPS
 
+Luckily, Betamax supports using HTTPS such that it can operate as a complete record and pass-through of the credentials from the original connection establishment point. After an hour or so of light sweating I found a configuration that worked.
 
+It turned out that all I needed to do was enable HTTPS support on my `HTTPBuilder`'s client and I was good to go. My complete `RecordingJSONServicesConfiguration` ended up looking like the following:
 
-Further Information
+	@Configuration
+	@Profile('test')
+	class RecordingJSONServicesConfiguration {
 
-* Book
-* Course on Simplicity Itself
+  		@Bean
+  		HTTPBuilder httpBuilder() {
+    		def builder = new HTTPBuilder()
+    		BetamaxRoutePlanner.configure(builder.client)
+				BetamaxHttpsSupport.configure(builder.client);
+    		builder
+  		}
+	}
+
+Now when I ran the test, the first time through it would hit the source system and *slowly* drag over the 5 hours of posts. At the end of the run a complete tape of those requests was recorded by default, to my `resources/betamax/tapes/chatter-import.yaml` file.
+
+Next time I ran the test I didn't even have time to get up out of my chair. The tape was read and run through my service's functionality quicker than you can say *antifragile microservices*.
+
+## A last word on Java versions
+
+Ok, so there was one little problem that I've skimmed over. Originally I was using Java 8 and I had all sorts of odd problems with major and minor versions of class files, not to mention issues saving my tapes. A quick switch back to using Java 7, which to be fair is the recommended Java version of Betamax, and everything cleaned itself up.
+
+I just mentioned this to save you some headaches just in case you're also fond of the bleeding edge, technology-wise.
+
+## Remember & Apply
+
+Betamax is a wonderful tool for speeding up slow functional testing on microservices where you're perhaps pulling or pushing service-invocation data around using HTTP and you don't want to use slow source services every time. Using Betamax I got all the confidence of using *real* data, with none of the performance penalty of hitting the actual system.
+
+Of course, if the actual source changes you'll need to delete and re-record your tapes, but that's a one-time hit at that point only.
+
+## Want Further Information?
+
+This blog has been a taster of developing a microservice that is invoked as part of a primarily HTTP-based pipeline. If you're interested in developing systems based on microservices, particularly taking advantage of the [antifragile properties]() that can be exhibited from such an architecture, then checking lout the following book and courses might be helpful:
+
+* [Antifragile Software: Building Adaptable Software with Microservices](https://leanpub.com/antifragilesoftware) book.
+* [Building Antifragile Software with Microservices](http://www.simplicityitself.com/training/course/building_adaptable_software/) course.
 
  
 
