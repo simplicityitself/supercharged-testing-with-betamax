@@ -146,7 +146,7 @@ It turned out that all I needed to do was enable HTTPS support on my `HTTPBuilde
   		HTTPBuilder httpBuilder() {
     		def builder = new HTTPBuilder()
     		BetamaxRoutePlanner.configure(builder.client)
-				BetamaxHttpsSupport.configure(builder.client);
+			BetamaxHttpsSupport.configure(builder.client);
     		builder
   		}
 	}
