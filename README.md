@@ -32,7 +32,8 @@ My micro service is built using [Spring Boot](http://projects.spring.io/spring-b
 
 Ok, first let's take a look at the test before introducing Betamax. This test's aim was to prove that a few hours of posts, numbering roughly several thousands of posts, could be effectively slurped into the pipeline in nicely bounded hour chunks. For this testing, I used (as I often do when working with Java) the excellent [Spock framework](https://code.google.com/p/spock/):
 
-`class HourBatchChatImportPipelineIntegrationSpec extends BaseLocalEnvironmentSpec {
+`
+class HourBatchChatImportPipelineIntegrationSpec extends BaseLocalEnvironmentSpec {
 
   def "import and process chatter feed items correctly"() {
 
@@ -50,7 +51,8 @@ Ok, first let's take a look at the test before introducing Betamax. This test's 
     then:
     response != null
   }
-}`
+}
+`
 
 > There is also support for JUnit withing Betamax, although here we'll focus on using Spock as the tests are much simpler, clearer and therefore more readable and comprehendible.
 
