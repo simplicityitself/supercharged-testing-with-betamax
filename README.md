@@ -84,6 +84,8 @@ Taking a peek at the 'Getting Started' information on the Betamax homepage, thin
 
 With the dependencies in place, I could then add the markers to my Spock test to state that I wanted to use Betamax to record the HTTP interactions caused by my service importing chat posts.
 
+	...
+
 	@Rule Recorder recorder = new Recorder()
 
  	@Betamax(tape = 'chatter-import')
