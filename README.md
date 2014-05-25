@@ -121,8 +121,8 @@ I then added this new configuration to my local test configuration in the `BaseL
   		def setupSpec() {
     		applicationContext = new AnnotationConfigApplicationContext()
     		applicationContext.getEnvironment().setActiveProfiles("local", "test");
-    		applicationContext.register(ChatHooverController);
-		applicationContext.register(RecordingJSONServicesConfiguration);
+    			applicationContext.register(ChatHooverController);
+			applicationContext.register(RecordingJSONServicesConfiguration);
     applicationContext.refresh()
   		}
 }
