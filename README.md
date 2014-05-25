@@ -1,10 +1,16 @@
 # Supercharged Microservice Testing with Betamax
 
-*Yawn*. That pretty much sums up doing functional testing for microservices where you're pulling data feeds from an external system. No matter how fast you'd like things to go, you're at the mercy of network latency and the responsiveness of the source system to get you enough data to feed into your microservices pipeline to give you the confidence that it works properly.
+*Yawn*. That pretty much sums up doing functional testing for microservices where you're pulling data feeds from an external system. 
 
-If you find your own life dwindling away as you run YAFT (yet another functional test) against an HTTP external source, you're not alone. This problem is not going away as microservice pipelines provide functional composition in support of mashing up data from disparate sources. 
+No matter how fast you'd like things to go, you're at the mercy of network latency and the responsiveness of the source system to get you enough data to feed into your microservices pipeline to give you the confidence that it works properly.
 
-So what can be done to quite literal save your life in these situations? On the one hand there's a nice timeslot for coffee, a short chat and possibly a hike across the Sahara (including pre-training time). On the other hand, there's [*Betamax*](http://freeside.co/betamax/).
+If you find your own life dwindling away as you run *YAFT* (yet another functional test) against an HTTP external source, you're not alone. 
+
+This problem is not going away as microservice pipelines provide functional composition in support of mashing up data from disparate sources. 
+
+So what can be done to quite literally save your life in these situations? On the one hand there's a nice timeslot for coffee, a short chat and possibly a hike across the Sahara (including pre-training time). 
+
+On the other hand, if you want to beat the delay there's [*Betamax*](http://freeside.co/betamax/).
 
 ## A (Brief) Introduction to Betamax
 
@@ -134,7 +140,7 @@ Disaster had struck the shape of the dreaded *HTTPS*, and I was stuck.
 
 ## Challenge 2: HTTPS
 
-Luckily, Betamax supports using HTTPS such that it can operate as a complete record and pass-through of the credentials from the original connection establishment point. After an hour or so of light sweating I found a configuration that worked.
+Luckily, [Betamax supports using HTTPS](http://freeside.co/betamax/#https) such that it can operate as a complete record and pass-through of the credentials from the original connection establishment point. After an hour or so of light sweating I found a configuration that worked.
 
 It turned out that all I needed to do was enable HTTPS support on my `HTTPBuilder`'s client and I was good to go. My complete `RecordingJSONServicesConfiguration` ended up looking like the following:
 
