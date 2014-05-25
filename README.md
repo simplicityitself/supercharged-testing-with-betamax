@@ -22,7 +22,7 @@ TBD diagram showing the tape being used for replay.
 
 I came to Betamax as someone who was running a long-winded test against an external chat-style system. My micro service's single-purpose was to retrieve 1-hour batches of conversations in the chat system, and ferrying that on to the next micro service in the chain for further processing. 
 
-	*NOTE* This is a real 'live' system, so I've had to remove the names to protect the *innocent*.
+> *NOTE* This is a real 'live' system, so I've had to remove the names to protect the *innocent*.
 
 
 
