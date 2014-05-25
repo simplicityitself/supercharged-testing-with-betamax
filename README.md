@@ -59,11 +59,11 @@ Here we're using a `BaseLocalEnvironmentSpec` to set up the Spring application c
   		def static applicationContext;
 
   		def setupSpec() {
-    	applicationContext = new AnnotationConfigApplicationContext()
-    	applicationContext.getEnvironment().setActiveProfiles("local", "test");
-    	applicationContext.register(ChatHooverController);
-    	applicationContext.register(RecordingJSONServicesConfiguration);
-    applicationContext.refresh()
+    		applicationContext = new AnnotationConfigApplicationContext()
+    		applicationContext.getEnvironment().setActiveProfiles("local", "test");
+    		applicationContext.register(ChatHooverController);
+
+    	applicationContext.refresh()
   		}
 	}
 
