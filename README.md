@@ -49,7 +49,7 @@ Ok, first let's take a look at the test before introducing Betamax. This test's 
 
     	then:
     	response != null
-  		}
+    }
 	}
 
 
