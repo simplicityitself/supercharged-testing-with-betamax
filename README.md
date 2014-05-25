@@ -175,7 +175,7 @@ Of course, if the actual source changes you'll need to delete and re-record your
 
 ## Want Further Information?
 
-This blog has been a taster of developing a microservice that is invoked as part of a primarily HTTP-based pipeline. If you're interested in developing systems based on microservices, particularly taking advantage of the [antifragile properties]() that can be exhibited from such an architecture, then checking lout the following book and courses might be helpful:
+This blog has been a taster of developing a microservice that is invoked as part of a primarily HTTP-based pipeline. If you're interested in developing systems based on microservices, particularly taking advantage of the [antifragile properties](http://www.infoq.com/articles/russ-miles-antifragility-microservices) that can be exhibited from such an architecture, then checking lout the following book and courses might be helpful:
 
 * [Antifragile Software: Building Adaptable Software with Microservices](https://leanpub.com/antifragilesoftware) book.
 * [Building Antifragile Software with Microservices](http://www.simplicityitself.com/training/course/building_adaptable_software/) course.
