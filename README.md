@@ -1,6 +1,6 @@
 # Supercharged HTTP-based Microservice Testing with Betamax
 
-*Yawn*... That pretty much sums up doing functional testing for microservices where you're pulling data feeds from an external system. 
+*Yawn*...  That pretty much sums up doing functional testing for microservices where you're pulling data feeds from an external system. 
 
 No matter how fast you'd like things to go, you're at the mercy of network latency and the responsiveness of the source system to get you enough data to feed into your microservices pipeline to give you the confidence that it works properly.
 
@@ -18,11 +18,13 @@ Betamax is a really simple system for recording HTTP interactions and then playi
 
 Adopting what is effectively a proxy man-in-the-middle position,  Betamax records detected HTTP interactions to a *tape* as shown below:
 
-TBD Diagram showing Betamax as a man-in-the-middle recording HTTP interactions to a Betamax tape.
+{width=40%}
+![Betamax in context](images/figure-1.JPG)
 
 The Betamax tape is a human-readable [YAML](http://www.yaml.org) file that you can amend if you choose to do so. The main purpose of the tape is to then be automatically used in place of the full, and slow, interactions the next time the test is run.
 
-TBD diagram showing the tape being used for replay.
+{width=40%}
+![Betamax being used for replay](images/figure-2.JPG)
 
 ## Challenge 1: Speed
 
