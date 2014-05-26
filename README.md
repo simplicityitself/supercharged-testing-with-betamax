@@ -18,12 +18,10 @@ Betamax is a really simple system for recording HTTP interactions and then playi
 
 Adopting what is effectively a proxy man-in-the-middle position,  Betamax records detected HTTP interactions to a *tape* as shown below:
 
-{width=40%}
 ![Betamax in context](images/figure-1.JPG)
 
 The Betamax tape is a human-readable [YAML](http://www.yaml.org) file that you can amend if you choose to do so. The main purpose of the tape is to then be automatically used in place of the full, and slow, interactions the next time the test is run.
 
-{width=40%}
 ![Betamax being used for replay](images/figure-2.JPG)
 
 ## Challenge 1: Speed
